@@ -1,0 +1,2 @@
+0;1;I promessi sposi;manzoni;600
+3;4;Moby Dick;Melville;700

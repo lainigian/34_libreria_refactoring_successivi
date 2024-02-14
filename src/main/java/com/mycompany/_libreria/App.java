@@ -9,6 +9,7 @@ import eccezioni.EccezionePosizioneNonValida;
 import eccezioni.EccezionePosizioneOccupata;
 import eccezioni.EccezionePosizioneVuota;
 import eccezioni.EccezioneRipianoNonValido;
+import eccezioni.FileException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -29,7 +30,7 @@ public class App {
         int sceltaMenu;
        // Scanner tastiera=new Scanner(System.in);
         ConsoleInput tastiera=new ConsoleInput();
-        String vociMenu[]=new String[7];
+        String vociMenu[]=new String[8];
         {
             vociMenu[0]="Esci";
             vociMenu[1]="Visualizza libri presenti nello scaffale";
@@ -38,7 +39,11 @@ public class App {
             vociMenu[4]="Cerca volume (ripiano, posizione)";
             vociMenu[5]="Cerca libri autore";
             vociMenu[6]="Volumi presenti in ordine alfabetico";
+            vociMenu[7]="Esporta tutti i libri in formato CSV";
         }
+        
+        //Pathname file in cui verranno esportati i libri in formato CSV
+        String nomeFileCSV="libriScaffale.txt";
         
         //Istanzio il menu
         Menu menu=new Menu(vociMenu);
@@ -350,6 +355,40 @@ public class App {
                     {
                         System.out.println(elencoLibriOrdinato[i].toString());
                     }
+                    break;
+                
+                case 7:
+                {
+                    try 
+                    {
+                        s1.esportaLibriCSV(nomeFileCSV);
+                        System.out.println("Esportazione avvenuta correttamente");
+                    } 
+                    catch (EccezioneRipianoNonValido ex) 
+                    {
+                       //questa eccezione non dovrebbe mai verificarsi visto che i ripiani e le posizioni 
+                        //sono state indicate correttamente nel metodo invocato
+                        System.out.println("Ripiano non valido");
+                    } 
+                    catch (EccezionePosizioneNonValida ex) 
+                    {
+                       //questa eccezione non dovrebbe mai verificarsi visto che i ripiani e le posizioni 
+                        //sono state indicate correttamente nel metodo invocato
+                        System.out.println("Posizione non valida");
+                    } 
+                    catch (IOException ex) 
+                    {
+                        System.out.println("Errore! Impossibile accedere al file.");
+                    } 
+                    catch (FileException ex) 
+                    {
+                        System.out.println(ex.toString());
+                    }
+                }
+                    
+                    
+                    break;
+
             }
             
         }while(true);

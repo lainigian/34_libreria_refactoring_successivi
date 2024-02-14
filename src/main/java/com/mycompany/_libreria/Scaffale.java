@@ -9,8 +9,11 @@ import eccezioni.EccezionePosizioneNonValida;
 import eccezioni.EccezionePosizioneOccupata;
 import eccezioni.EccezionePosizioneVuota;
 import eccezioni.EccezioneRipianoNonValido;
+import eccezioni.FileException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import text_file.TextFile;
 
 /**
  *
@@ -255,6 +258,31 @@ public class Scaffale
         return elencoLibriPresenti;
     }
     
+    public void esportaLibriCSV(String nomeFile) throws EccezioneRipianoNonValido, EccezionePosizioneNonValida, IOException, FileException
+    {
+        Libro lib;
+        String libroCSV;
+        TextFile f1;
+        
+        f1=new TextFile(nomeFile, 'W',true); //Apro il file in scrittura in append
+        for(int i=0;i<getNumRipiani();i++)
+        {
+            for(int j=0;j<getNumMaxLibri(i);j++)
+            {
+                try 
+                {
+                    lib=getLibro(i, j);
+                    libroCSV=i+";"+j+";"+lib.getTitolo()+";"+lib.getAutore()+";"+lib.getNumeropagine();
+                    f1.toFile(libroCSV);
+                } 
+                catch (EccezionePosizioneVuota ex) 
+                {
+                    //Se la posizione è vuota non fa nulla
+                } 
+            }
+        }
+       f1.close();
+    }
     
     public String toString()
     {
