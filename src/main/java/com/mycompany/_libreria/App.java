@@ -30,7 +30,7 @@ public class App {
         int sceltaMenu;
        // Scanner tastiera=new Scanner(System.in);
         ConsoleInput tastiera=new ConsoleInput();
-        String vociMenu[]=new String[8];
+        String vociMenu[]=new String[9];
         {
             vociMenu[0]="Esci";
             vociMenu[1]="Visualizza libri presenti nello scaffale";
@@ -40,6 +40,7 @@ public class App {
             vociMenu[5]="Cerca libri autore";
             vociMenu[6]="Volumi presenti in ordine alfabetico";
             vociMenu[7]="Esporta tutti i libri in formato CSV";
+            vociMenu[8]="Importa nello scaffale dei libri da un file CSV";
         }
         
         //Pathname file in cui verranno esportati i libri in formato CSV
@@ -358,37 +359,32 @@ public class App {
                     break;
                 
                 case 7:
-                {
+                
                     try 
                     {
                         s1.esportaLibriCSV(nomeFileCSV);
                         System.out.println("Esportazione avvenuta correttamente");
-                    } 
-                    catch (EccezioneRipianoNonValido ex) 
-                    {
-                       //questa eccezione non dovrebbe mai verificarsi visto che i ripiani e le posizioni 
-                        //sono state indicate correttamente nel metodo invocato
-                        System.out.println("Ripiano non valido");
-                    } 
-                    catch (EccezionePosizioneNonValida ex) 
-                    {
-                       //questa eccezione non dovrebbe mai verificarsi visto che i ripiani e le posizioni 
-                        //sono state indicate correttamente nel metodo invocato
-                        System.out.println("Posizione non valida");
-                    } 
+                    }  
                     catch (IOException ex) 
                     {
-                        System.out.println("Errore! Impossibile accedere al file.");
+                        System.out.println("Errore! Impossibile accedere al file. I libri non sono stati esportati!");
                     } 
                     catch (FileException ex) 
                     {
                         System.out.println(ex.toString());
                     }
-                }
-                    
-                    
                     break;
-
+                case 8:
+                    try 
+                    {
+                        s1.importaLibriCSV(nomeFileCSV);
+                        System.out.println("Importazione avvenuta con successo.");
+                    } 
+                    catch (IOException ex) 
+                    {
+                        System.out.println("Errore! impossibile accedere ai file. I libri non sono stati importati!");
+                    }
+                    break;
             }
             
         }while(true);

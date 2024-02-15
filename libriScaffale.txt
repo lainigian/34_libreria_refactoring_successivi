@@ -1,2 +1,2 @@
-0;1;I promessi sposi;manzoni;600
-3;4;Moby Dick;Melville;700
+1;1;I promessi sposi;Manzoni;600
+3;4;Le avventure di Pinocchio;Collodi;200

@@ -258,31 +258,105 @@ public class Scaffale
         return elencoLibriPresenti;
     }
     
-    public void esportaLibriCSV(String nomeFile) throws EccezioneRipianoNonValido, EccezionePosizioneNonValida, IOException, FileException
+    /**
+     * Esporta i libri presenti nello scaffale in un file di testo in formato CSV.
+     * Per ogni libro vengono esportate le seguenti informazioni:
+     * ripiano;posizione;titolo;autore;numeroPagine.
+     * Prima di esportare i libri, cancello dal file CSV tutti i dati presenti
+     * @param nomeFile  Pathname del file di testo in cui verranno salvati i dati
+     * @throws IOException  Se non è possibile accedere al file
+     * @throws FileException    Se il file è aperto in lettura anzichè in scrittura
+     */
+    public void esportaLibriCSV(String nomeFile) throws IOException, FileException
     {
         Libro lib;
         String libroCSV;
         TextFile f1;
         
+        //Prima cancello i libri presenti nel file
+        f1=new TextFile(nomeFile, 'W');
+        f1.close();
+        
+        //Poi apro il file i append per aggiungere, uno alla volta, il libri dello scaffale
         f1=new TextFile(nomeFile, 'W',true); //Apro il file in scrittura in append
         for(int i=0;i<getNumRipiani();i++)
         {
-            for(int j=0;j<getNumMaxLibri(i);j++)
+            try 
             {
-                try 
+                for(int j=0;j<getNumMaxLibri(i);j++) 
                 {
-                    lib=getLibro(i, j);
-                    libroCSV=i+";"+j+";"+lib.getTitolo()+";"+lib.getAutore()+";"+lib.getNumeropagine();
-                    f1.toFile(libroCSV);
-                } 
-                catch (EccezionePosizioneVuota ex) 
-                {
-                    //Se la posizione è vuota non fa nulla
-                } 
+                    try
+                    {
+                        lib=getLibro(i, j);
+                        libroCSV=i+";"+j+";"+lib.getTitolo()+";"+lib.getAutore()+";"+lib.getNumeropagine();
+                        f1.toFile(libroCSV);
+                    }
+                    catch (EccezionePosizioneNonValida | EccezioneRipianoNonValido | EccezionePosizioneVuota ex)
+                    { 
+                        //In tutti questi casi l'applicazione non fa nulla
+                    }
+                }
+            } 
+            catch (EccezioneRipianoNonValido ex) 
+            {
+                //L'applicazione noin fa nulla. Questa eccezione non si vrrifica mai se il ciclo for è costruito correttamente.
             }
         }
        f1.close();
     }
+    
+    // 
+    /**
+     * Legge i libri presenti in un file di testo CSV e li aggiunge allo scaffale,
+     * Se il ripiano o la posizione del libro non è valida,il  libro letto dal file non viene caricato
+     * Se il ripiano/posizione del libro è già occupato, il libro letto dal file non viene caricato.
+     * @param nomeFile pathname del file CSV da cui importare i volumi
+     * @throws IOException Se non è possibile accedere al file
+     */
+    public void importaLibriCSV(String nomeFile) throws IOException
+    {
+        TextFile f1=new TextFile(nomeFile, 'R'); //Apro il file in lettura
+        String libroLetto;
+        String[] libroLettoSplit;
+        String autore,titolo;
+        int ripiano, posizione,numeroPagine;
+        
+        Libro lib = null;
+        
+        try 
+        {
+            //ciclo di lettura da file
+            libroLetto=f1.fromFile();
+            
+            while(libroLetto!=null)
+            {     
+                libroLettoSplit=libroLetto.split(";");
+                ripiano=Integer.parseInt(libroLettoSplit[0]);
+                posizione=Integer.parseInt(libroLettoSplit[1]);
+                titolo=libroLettoSplit[2];
+                autore=libroLettoSplit[3];
+                numeroPagine=Integer.parseInt(libroLettoSplit[4]);
+                lib=new Libro(titolo,autore,numeroPagine);
+                try 
+                {
+                    setLibro(lib, ripiano, posizione);
+                } 
+                catch (EccezionePosizioneOccupata | EccezionePosizioneNonValida |EccezioneRipianoNonValido ex) 
+                {
+                   //Il libro letto da file viene ignorato in tutti questi casi
+                }  
+                libroLetto=f1.fromFile();   //Leggo il libro successivo
+            }
+        } 
+        catch (FileException ex) 
+        {
+           //Esce dal ciclo quando il file è terminato oppure è stato apreto in scrittura anzichè in lettura
+        }
+        f1.close();
+        
+    }
+    
+    
     
     public String toString()
     {
