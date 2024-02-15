@@ -10,7 +10,13 @@ import eccezioni.EccezionePosizioneOccupata;
 import eccezioni.EccezionePosizioneVuota;
 import eccezioni.EccezioneRipianoNonValido;
 import eccezioni.FileException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import text_file.TextFile;
@@ -19,7 +25,7 @@ import text_file.TextFile;
  *
  * @author gian
  */
-public class Scaffale 
+public class Scaffale implements Serializable
 {
     private Mensola[] ripiani;
     private final int NUM_RIPIANI=5;
@@ -326,8 +332,7 @@ public class Scaffale
         try 
         {
             //ciclo di lettura da file
-            libroLetto=f1.fromFile();
-            
+            libroLetto=f1.fromFile();  
             while(libroLetto!=null)
             {     
                 libroLettoSplit=libroLetto.split(";");
@@ -353,9 +358,42 @@ public class Scaffale
            //Esce dal ciclo quando il file è terminato oppure è stato apreto in scrittura anzichè in lettura
         }
         f1.close();
-        
     }
     
+    /**
+     * Salva l'oggetto scaffale this (e tutti gli oggetti in esso contenuti) su un file binario
+     * @param nomeFile Nome del file
+     * @throws FileNotFoundException Se il file non viene trovato in fase di chiusura
+     * @throws IOException Se non è possibile accedere al file
+     */
+    public void salvaScaffale(String nomeFile) throws FileNotFoundException, IOException
+    {
+        
+        FileOutputStream f1=new FileOutputStream(nomeFile);
+        ObjectOutputStream output=new ObjectOutputStream(f1);
+        output.writeObject(this);
+        output.close();
+    }
+    
+    /**
+     * Restituisce un oggetto scaffale (e tutti gli oggetti in esso contenuti)
+     * precedentemente memeorizzato in un file binario
+     * 
+     * @param nomeFile Pathname del file binario
+     * @return
+     * @throws FileNotFoundException Se il file non viene trovato in fase di chiusura
+     * @throws IOException      Se non è possibile accedere al file
+     * @throws ClassNotFoundException Se la struttura dati memorizzata nel file non corrisponde allo scaffale
+     */
+    public static Scaffale caricaScaffale(String nomeFile) throws FileNotFoundException, IOException, ClassNotFoundException
+    {
+        FileInputStream f1=new FileInputStream(nomeFile);
+        ObjectInputStream input=new ObjectInputStream(f1);
+        Scaffale s;    
+        s=(Scaffale)input.readObject();
+        input.close();
+        return s;
+    }
     
     
     public String toString()

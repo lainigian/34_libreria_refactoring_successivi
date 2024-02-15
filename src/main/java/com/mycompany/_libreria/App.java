@@ -30,7 +30,29 @@ public class App {
         int sceltaMenu;
        // Scanner tastiera=new Scanner(System.in);
         ConsoleInput tastiera=new ConsoleInput();
-        String vociMenu[]=new String[9];
+        //Pathname file in cui verranno esportati i libri in formato CSV
+        String nomeFileCSV="libriScaffale.txt";
+         //Pathname file in cui verranno esportati i libri in formato CSV
+        String nomeFileBIN="scaffale.bin";
+        
+        //Caricamento iniziale dello scaffale dal file binario
+        try 
+        {     
+            s1=Scaffale.caricaScaffale(nomeFileBIN);
+            System.out.println("Caricamento dati iniziali avvenuto correttamente");
+        } 
+        catch (IOException ex ) 
+        {
+            System.out.println("File vuoto o non presente. Dati scaffale non caricati.");
+        } 
+        catch (ClassNotFoundException ex) 
+        {
+            System.out.println("File vuoto o non presente. Dati scaffale non caricati.");
+        }
+        
+        
+        
+        String vociMenu[]=new String[11];
         {
             vociMenu[0]="Esci";
             vociMenu[1]="Visualizza libri presenti nello scaffale";
@@ -41,10 +63,11 @@ public class App {
             vociMenu[6]="Volumi presenti in ordine alfabetico";
             vociMenu[7]="Esporta tutti i libri in formato CSV";
             vociMenu[8]="Importa nello scaffale dei libri da un file CSV";
+            vociMenu[9]="Salva scaffale su file";
+            vociMenu[10]="Importa scaffale da file";
         }
         
-        //Pathname file in cui verranno esportati i libri in formato CSV
-        String nomeFileCSV="libriScaffale.txt";
+        
         
         //Istanzio il menu
         Menu menu=new Menu(vociMenu);
@@ -385,6 +408,34 @@ public class App {
                         System.out.println("Errore! impossibile accedere ai file. I libri non sono stati importati!");
                     }
                     break;
+               
+                case 9:
+                    try 
+                    {
+                        s1.salvaScaffale(nomeFileBIN);
+                         System.out.println("Salvataggio dati avvenuto correttamente");
+                    } 
+                    catch (IOException ex) 
+                    {
+                        System.out.println("Impossibile accedere al file. Savataggio non avvenuto");
+                    }
+                    break;
+                    
+                case 10:
+                    //Caricamento scaffale da file binario
+                    try 
+                    {     
+                        s1=Scaffale.caricaScaffale(nomeFileBIN);
+                        System.out.println("Caricamento dati avvenuto correttamente");
+                    } 
+                    catch (IOException ex ) 
+                    {
+                        System.out.println("File vuoto o non presente. Dati scaffale non caricati.");
+                    } 
+                    catch (ClassNotFoundException ex) 
+                    {
+                        System.out.println("File vuoto o non presente. Dati scaffale non caricati.");
+                    }
             }
             
         }while(true);

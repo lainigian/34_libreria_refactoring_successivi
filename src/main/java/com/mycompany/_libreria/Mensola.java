@@ -5,12 +5,14 @@
 package com.mycompany._libreria;
 
 import eccezioni.*;
+import java.io.Serializable;
+
 
 /**
  *
  * @author Gian
  */
-public class Mensola 
+public class Mensola implements Serializable
 {
     private Libro[] volumi;
     private final int NUM_MAX_VOLUMI=15;
