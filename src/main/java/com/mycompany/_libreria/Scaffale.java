@@ -264,6 +264,44 @@ public class Scaffale implements Serializable
         return elencoLibriPresenti;
     }
     
+     public Libro[] elencoOrdinatoLibriPresentiAutoreTitolo() throws EccezioneRipianoNonValido, EccezionePosizioneNonValida
+    {
+        int nLibriPresenti=0;
+        Libro[] elencoLibriPresenti;
+        Mensola ripiano;
+        Libro volume;
+        int contatore=0;
+        //Calcolo numero libri presenti
+        for (int i=0;i<getNumRipiani();i++)
+        {
+            nLibriPresenti+=getNumLibri(i);
+        }
+        //creo array
+        elencoLibriPresenti=new Libro[nLibriPresenti];
+       
+        for(int i=0;i<getNumRipiani();i++)
+        {
+            ripiano=ripiani[i];
+            for (int j=0;j<ripiano.getNumMaxVolumi();j++)
+            {
+                try 
+                {
+                    volume=getLibro(i, j);
+                    elencoLibriPresenti[contatore]=new Libro(volume);
+                    contatore++;
+                } 
+                catch (EccezionePosizioneVuota ex) 
+                {
+                   
+                }                 
+            }
+        }
+        
+        elencoLibriPresenti=Ordinatore.selectionSortCrescenteTitoloAutore(elencoLibriPresenti);
+        return elencoLibriPresenti;
+    }
+    
+    
     /**
      * Esporta i libri presenti nello scaffale in un file di testo in formato CSV.
      * Per ogni libro vengono esportate le seguenti informazioni:

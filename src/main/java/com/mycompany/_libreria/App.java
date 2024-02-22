@@ -60,7 +60,7 @@ public class App {
             vociMenu[3]="Elimina volume (ripiano, posizione)";
             vociMenu[4]="Cerca volume (ripiano, posizione)";
             vociMenu[5]="Cerca libri autore";
-            vociMenu[6]="Volumi presenti in ordine alfabetico";
+            vociMenu[6]="Volumi presenti in ordine alfabetico di autore e titolo";
             vociMenu[7]="Esporta tutti i libri in formato CSV";
             vociMenu[8]="Importa nello scaffale dei libri da un file CSV";
             vociMenu[9]="Salva scaffale su file";
@@ -365,7 +365,7 @@ public class App {
                     Libro[] elencoLibriOrdinato = null;
                     try 
                     {
-                        elencoLibriOrdinato=s1.elencoOrdinatoLibriPresenti();
+                        elencoLibriOrdinato=s1.elencoOrdinatoLibriPresentiAutoreTitolo();
                     } 
                     catch (EccezioneRipianoNonValido ex) 
                     {

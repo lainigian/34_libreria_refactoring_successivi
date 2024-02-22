@@ -80,6 +80,35 @@ public class Ordinatore
             return ordinato;
         }
         
+         /**
+         * Ordinamento crescente un array di libri in base all'autore 
+         * e successivamente al titolo con selection sort
+         * @param a l'array di libri ordinato
+         * @return 
+         */
+        public static Libro[] selectionSortCrescenteTitoloAutore(Libro[] a)
+        {
+            int N=a.length;
+            Libro[] ordinato=new Libro[N];
+            //copio i valori di a nel nuovo vettore
+            for (int i=0;i<N;i++)
+            {
+                ordinato[i]=new Libro(a[i]);
+            }
+            
+            for (int i=0;i<N-1;i++)
+            {
+                for (int j=i;j<N;j++)
+                {
+                    if ((ordinato[j].getAutore().compareToIgnoreCase(ordinato[i].getAutore())<0) || ((ordinato[j].getAutore().equals(ordinato[i].getAutore()) && (ordinato[j].getTitolo().compareTo(ordinato[i].getTitolo())<0)  )) )
+                        scambia(ordinato, i, j);
+                }
+            }
+            return ordinato;
+        }
+        
+        
+        
         
         /**
          * Ordinamento decrescente un array di libri in base al titolo con selection sort
