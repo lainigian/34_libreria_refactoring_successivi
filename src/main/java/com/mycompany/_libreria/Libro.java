@@ -22,7 +22,7 @@ public class Libro implements Serializable
     {
         this.titolo=titolo;
         this.autore=autore;
-        this.numeroPagine=numeroPagine;
+        setNumeroPagine(numeroPagine);
                 
     }
     public Libro()
@@ -61,7 +61,9 @@ public class Libro implements Serializable
     }
     public void setNumeroPagine(int numeroPagine)
     {
-        this.numeroPagine=numeroPagine;
+        
+        if (numeroPagine>0)
+            this.numeroPagine=numeroPagine;
     }
     
     public double prezzo()
@@ -74,7 +76,8 @@ public class Libro implements Serializable
     
     public static void setCostoPagina(double costo)
     {
-        costoPagina=costo;
+        if (costo>0)
+            costoPagina=costo;
     }
     
     public static double getCostoPagina()
