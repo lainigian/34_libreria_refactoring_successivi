@@ -6,6 +6,8 @@ package com.mycompany._libreria;
 
 import eccezioni.*;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -49,7 +51,7 @@ public class Mensola implements Serializable
      * 
      * @param elencoLibri 
      */
-    public Mensola(Libro[] elencoLibri)
+  /*  public Mensola(Libro[] elencoLibri)
     {
         volumi=new Libro[NUM_MAX_VOLUMI];
         int contaLibri=0;
@@ -185,5 +187,33 @@ public class Mensola implements Serializable
             }
         }
        return s;     
+    }
+    
+    public boolean equals(Object o)
+    {
+        Mensola m=(Mensola) o;
+       
+        //Controllo prima che le due mensole contengano lo stesso numero di volumi
+        if (getNumVolumi()!=m.getNumVolumi())
+            return false;
+        //Ora controllo che i volumi presenti siano uguali
+        for(int i=0;i<getNumMaxVolumi();i++)
+        {
+            try 
+            {
+                if (!getVolume(i).equals(m.getVolume(i)))
+                    return false;
+            } 
+            catch (EccezionePosizioneVuota ex) 
+            {
+               //Non fare nulla
+            } 
+            catch (EccezionePosizioneNonValida ex) 
+            {
+                //non succederà mai
+            }
+        }
+        
+        return true;
     }
 }
