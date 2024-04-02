@@ -12,6 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  *
  * @author gian
+ *  Il codice dei seguenti test case è stato prodotto con 
+ *  ChatGPT
  */
 class LibroTest {
     
