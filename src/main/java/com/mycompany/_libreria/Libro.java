@@ -91,4 +91,11 @@ public class Libro implements Serializable
         s="\nTitolo: "+getTitolo()+"\nAutore:"+getAutore()+"\nNumero pagine="+getNumeropagine()+"\n";
         return s;
     }
+    
+    public boolean equals(Object o)
+    {
+        Libro l=(Libro) o;
+        return (getTitolo().equals(l.getTitolo()) && getAutore().equals(l.getAutore()) && getNumeropagine()==l.getNumeropagine());
+    }
+    
 }

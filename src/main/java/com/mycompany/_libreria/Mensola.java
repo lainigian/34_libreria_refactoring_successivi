@@ -68,7 +68,7 @@ public class Mensola implements Serializable
     
    /**
     * Aggiunge un volume alla mensola 
-    * @param volume Volumer da aggiungere
+    * @param volume Volume da aggiungere
     * @param posizione Posizione in cui aggiungere il volume
     * @return
     * @throws EccezionePosizioneOccupata La posizione in cui si cerca di aggiungere un volume è occupata, il volume non verrà aggiunto

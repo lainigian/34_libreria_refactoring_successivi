@@ -135,4 +135,11 @@ class LibroTest {
     void testToStringConLibroDiDefault() {
         assertEquals("\nTitolo: \nAutore:\nNumero pagine=0\n", libro.toString());
     }
+    
+     @Test
+    void testEqualsLibro() {
+        libro = new Libro("titolo1", "Autore1", 100);
+        Libro libro2=new Libro("titolo1", "Autore1", 100);
+        assertEquals(libro2, libro);
+    }
 }
