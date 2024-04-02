@@ -35,15 +35,28 @@ public class Mensola implements Serializable
      * @throws EccezionePosizioneVuota 
      */
     
-    public Mensola(Mensola m) throws EccezionePosizioneOccupata, EccezionePosizioneNonValida, EccezionePosizioneVuota
+    public Mensola(Mensola m) throws EccezionePosizioneNonValida
     {
         volumi=new Libro[NUM_MAX_VOLUMI];
-        Libro libro;
+        Libro libro = null;
         for(int i=0;i<m.getNumMaxVolumi();i++)
         {
-            libro=m.getVolume(i);
-            if (libro!=null)
+            try 
+            {
+                libro=m.getVolume(i);
                 setVolume(libro, i);
+                
+            } 
+            catch (EccezionePosizioneVuota ex) 
+            {
+                //Non fare nulla
+            } 
+            catch (EccezionePosizioneOccupata ex) 
+            {
+                //Non succederà mai
+            }
+            
+            
         }
     }
     
@@ -126,14 +139,16 @@ public class Mensola implements Serializable
      */
     public void rimuoviVolume(int posizione) throws EccezionePosizioneNonValida, EccezionePosizioneVuota
     {
-        /*
+        
         if (posizione>=NUM_MAX_VOLUMI || posizione<0)
-            return -1;
-           */
+            throw new EccezionePosizioneNonValida();
+           
          if (volumi[posizione]==null)
                // return -2;      //posizione vuota
                 throw new EccezionePosizioneVuota();
-        try
+         
+         volumi[posizione]=null;
+      /*  try
         {
            
             volumi[posizione]=null;
@@ -142,7 +157,8 @@ public class Mensola implements Serializable
         catch(ArrayIndexOutOfBoundsException e)
         {
             throw new EccezionePosizioneNonValida();
-        }   
+        }  
+*/
     }
     
     public int getNumMaxVolumi()
@@ -161,12 +177,19 @@ public class Mensola implements Serializable
         return contatore;
     }
     
-    public boolean presenzaTitolo(String titolo) throws EccezionePosizioneVuota, EccezionePosizioneNonValida
+    public boolean presenzaTitolo(String titolo) throws  EccezionePosizioneNonValida
     {
-        Libro libro;
+        Libro libro = null;
         for(int i=0;i<NUM_MAX_VOLUMI;i++)
         {
-            libro=getVolume(i);
+            try 
+            {
+                libro=getVolume(i);
+            } 
+            catch (EccezionePosizioneVuota ex) 
+            {
+                //non fare nulla
+            }
             if (libro!=null)
             {
                 if (libro.getTitolo().equals(titolo))
