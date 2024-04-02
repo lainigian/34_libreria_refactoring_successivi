@@ -8,6 +8,13 @@ package eccezioni;
  *
  * @author gian
  */
-public class EccezionePosizioneOccupata extends Exception{
+public class EccezionePosizioneOccupata extends Exception
+{
+    private String message="Posizione occupata";
+       
+       public String toString()
+       {
+           return message;
+       }
     
 }

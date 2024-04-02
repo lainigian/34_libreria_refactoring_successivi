@@ -4,65 +4,56 @@
  */
 package com.mycompany._libreria;
 
+import eccezioni.EccezionePosizioneNonValida;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
  * @author gian
  */
-public class MensolaTest {
+public class MensolaTest 
+{
     
     public MensolaTest() {
     }
 
+    Libro l1=new Libro("libro1","autore1",100);
+    Libro l2=new Libro("libro2","autore2",200);
+    Mensola m1;
     /**
      * Test of setVolume method, of class Mensola.
      */
+    
+    @BeforeEach
+    public void istanzioMensola()
+    {
+        m1=new Mensola();
+    }
+    
     @Test
-    public void testSetVolume() throws Exception {
+    public void testCostruttore()
+    {
+        assertEquals(0, m1.getNumVolumi());
+    }
+    
+    
+    @Test
+    public void testSetVolumeGetVolumePosizioneValida() throws Exception 
+    {
+        m1.setVolume(l1, 0);
+        assertEquals(l1, m1.getVolume(0));    
     }
 
-    /**
-     * Test of getVolume method, of class Mensola.
-     */
     @Test
-    public void testGetVolume() throws Exception {
+    public void testSetVolumePosizioneNegativa()
+    {
+       EccezionePosizioneNonValida eccezione = assertThrows(EccezionePosizioneNonValida.class, () ->
+            m1.setVolume(l1, -1));
+        assertEquals("Posizione non valida", eccezione.toString());
+   
     }
-
-    /**
-     * Test of rimuoviVolume method, of class Mensola.
-     */
-    @Test
-    public void testRimuoviVolume() throws Exception {
-    }
-
-    /**
-     * Test of getNumMaxVolumi method, of class Mensola.
-     */
-    @Test
-    public void testGetNumMaxVolumi() {
-    }
-
-    /**
-     * Test of getNumVolumi method, of class Mensola.
-     */
-    @Test
-    public void testGetNumVolumi() {
-    }
-
-    /**
-     * Test of presenzaTitolo method, of class Mensola.
-     */
-    @Test
-    public void testPresenzaTitolo() throws Exception {
-    }
-
-    /**
-     * Test of toString method, of class Mensola.
-     */
-    @Test
-    public void testToString() {
-    }
+    
     
 }

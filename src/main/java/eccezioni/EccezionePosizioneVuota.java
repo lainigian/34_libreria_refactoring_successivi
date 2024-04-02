@@ -10,5 +10,10 @@ package eccezioni;
  */
 public class EccezionePosizioneVuota extends Exception
 {
-    
+    private String message="Posizione vuota";
+       
+       public String toString()
+       {
+           return message;
+       }
 }

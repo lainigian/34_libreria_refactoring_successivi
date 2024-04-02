@@ -10,6 +10,12 @@ package eccezioni;
  */
 public class EccezionePosizioneNonValida extends Exception
 {
+       private String message="Posizione non valida";
+       
+       public String toString()
+       {
+           return message;
+       }
        
     
 }

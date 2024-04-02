@@ -8,6 +8,12 @@ package eccezioni;
  *
  * @author gian
  */
-public class EccezioneRipianoNonValido extends Exception{
-    
+public class EccezioneRipianoNonValido extends Exception
+{
+    private String message="Ripiano non valido";
+       
+       public String toString()
+       {
+           return message;
+       }
 }
