@@ -92,6 +92,7 @@ public class Libro implements Serializable
         return s;
     }
     
+    @Override
     public boolean equals(Object o)
     {
         Libro l=(Libro) o;

@@ -31,7 +31,7 @@ public class App {
        // Scanner tastiera=new Scanner(System.in);
         ConsoleInput tastiera=new ConsoleInput();
         //Pathname file in cui verranno esportati i libri in formato CSV
-        String nomeFileCSV="libriScaffale.txt";
+        String nomeFileCSV="libriScaffale.csv";
          //Pathname file in cui verranno esportati i libri in formato CSV
         String nomeFileBIN="scaffale.bin";
         
@@ -51,7 +51,7 @@ public class App {
         }
         
         
-        
+       
         String vociMenu[]=new String[11];
         {
             vociMenu[0]="Esci";
@@ -403,6 +403,10 @@ public class App {
                         s1.importaLibriCSV(nomeFileCSV);
                         System.out.println("Importazione avvenuta con successo.");
                     } 
+                    catch (NumberFormatException e)
+                    {
+                        System.out.println("Errore! Il formato del file CSV non è corretto.");
+                    }
                     catch (IOException ex) 
                     {
                         System.out.println("Errore! impossibile accedere ai file. I libri non sono stati importati!");
@@ -430,7 +434,7 @@ public class App {
                     } 
                     catch (IOException ex ) 
                     {
-                        System.out.println("File vuoto o non presente. Dati scaffale non caricati.");
+                        System.out.println("File corrotto o non presente. Dati scaffale non caricati.");
                     } 
                     catch (ClassNotFoundException ex) 
                     {

@@ -140,7 +140,34 @@ public class Scaffale implements Serializable
     */
         return numeroMassimoLibri;
     }
+
+     /*
+        Restituisce il numero di volumi presenti nello specifico ripiano
+    */
+    public int getNumMaxLibri(int ripiano) throws EccezioneRipianoNonValido
+    {
+        if (ripiano<0 || ripiano>NUM_RIPIANI)
+            throw new EccezioneRipianoNonValido();
+        return ripiani[ripiano].getNumMaxVolumi();
+    }
     
+     /*
+        Restituisce il numero di volumi presenti nel ripiano specificato 
+        come parametro
+    */
+    public int getNumLibri(int ripiano) throws EccezioneRipianoNonValido
+    {
+        if (ripiano<0 || ripiano>NUM_RIPIANI)
+            throw new EccezioneRipianoNonValido();
+        int numeroLibriPresenti;
+        if (ripiano<0 || ripiano>=NUM_RIPIANI)
+            return -1;   //ripiano non valido
+        
+        numeroLibriPresenti=ripiani[ripiano].getNumVolumi();
+        return numeroLibriPresenti;
+    }
+    
+        
     /**
      * Restituisce un array contenente  titoli dei libri di uno specifico autore
      * presente nello scaffale
@@ -201,31 +228,6 @@ public class Scaffale implements Serializable
          return elencoTitoli;   //restituisco l'array di titoli
     }
     
-     /*
-        Restituisce il numero di volumi presenti nello specifico ripiano
-    */
-    public int getNumMaxLibri(int ripiano) throws EccezioneRipianoNonValido
-    {
-        if (ripiano<0 || ripiano>NUM_RIPIANI)
-            throw new EccezioneRipianoNonValido();
-        return ripiani[ripiano].getNumMaxVolumi();
-    }
-    
-     /*
-        Restituisce il numero di volumi presenti nel ripiano specificato 
-        come parametro
-    */
-    public int getNumLibri(int ripiano) throws EccezioneRipianoNonValido
-    {
-        if (ripiano<0 || ripiano>NUM_RIPIANI)
-            throw new EccezioneRipianoNonValido();
-        int numeroLibriPresenti;
-        if (ripiano<0 || ripiano>=NUM_RIPIANI)
-            return -1;   //ripiano non valido
-        
-        numeroLibriPresenti=ripiani[ripiano].getNumVolumi();
-        return numeroLibriPresenti;
-    }
     
     public Libro[] elencoOrdinatoLibriPresenti() throws EccezioneRipianoNonValido, EccezionePosizioneNonValida
     {
@@ -273,7 +275,7 @@ public class Scaffale implements Serializable
      * @throws IOException  Se non è possibile accedere al file
      * @throws FileException    Se il file è aperto in lettura anzichè in scrittura
      */
-    public void esportaLibriCSV(String nomeFile) throws IOException, FileException
+    public void esportaLibriCSV(String nomeFile) throws IOException, FileException, NumberFormatException
     {
         Libro lib;
         String libroCSV;
