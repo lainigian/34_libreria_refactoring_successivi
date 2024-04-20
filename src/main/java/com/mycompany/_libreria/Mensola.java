@@ -215,7 +215,7 @@ public class Mensola implements Serializable
     public boolean equals(Object o)
     {
         Mensola m=(Mensola) o;
-       
+        Libro l1,l2;
         //Controllo prima che le due mensole contengano lo stesso numero di volumi
         if (getNumVolumi()!=m.getNumVolumi())
             return false;
@@ -224,12 +224,34 @@ public class Mensola implements Serializable
         {
             try 
             {
-                if (!getVolume(i).equals(m.getVolume(i)))
+                l1=this.getVolume(i);
+                try
+                {
+                    l2=m.getVolume(i);
+                    if (!l1.equals(l2))
+                        return false;
+                }
+                catch(EccezionePosizioneVuota e)
+                {
                     return false;
+                }
+                
             } 
             catch (EccezionePosizioneVuota ex) 
             {
-               //Non fare nulla
+                try 
+                {
+                    l2=m.getVolume(i);
+                    return false; //se non è vuota le due mensole sono diverse
+                } 
+                catch (EccezionePosizioneVuota ex1) 
+                {
+                    //ok anche questa è vuota
+                } 
+                catch (EccezionePosizioneNonValida ex1) 
+                {
+                    
+                }
             } 
             catch (EccezionePosizioneNonValida ex) 
             {

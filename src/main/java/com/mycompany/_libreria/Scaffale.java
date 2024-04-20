@@ -44,7 +44,7 @@ public class Scaffale implements Serializable
     /*
     Costruttore di copia
     */
-    public Scaffale(Scaffale s) throws EccezionePosizioneOccupata, EccezionePosizioneNonValida, EccezioneRipianoNonValido, EccezionePosizioneVuota
+    public Scaffale(Scaffale s) throws EccezionePosizioneOccupata, EccezionePosizioneNonValida, EccezioneRipianoNonValido
     {
         Libro libro;
         //Istanzio l'array di mensole
@@ -59,9 +59,15 @@ public class Scaffale implements Serializable
             {
                 for (int j=0;j<ripiani[i].getNumMaxVolumi();j++)
                 {
-                    libro=s.getLibro(i, j);
-                    if (libro!=null)
+                    try 
+                    {
+                        libro=s.getLibro(i, j);
                         setLibro(libro, i, j);
+                    } 
+                    catch (EccezionePosizioneVuota ex) 
+                    {
+                          //non fare nulla
+                    }           
                 }
             }
         }
@@ -372,6 +378,7 @@ public class Scaffale implements Serializable
         FileOutputStream f1=new FileOutputStream(nomeFile);
         ObjectOutputStream output=new ObjectOutputStream(f1);
         output.writeObject(this);
+        output.flush();
         output.close();
     }
     
@@ -406,4 +413,104 @@ public class Scaffale implements Serializable
         }
         return s;
     }
+//    
+//    //Restituisce una copia di una mensola
+//    public Mensola getMensola(int ripiano)
+//    {
+//        Mensola m=new Mensola();
+//        Libro l;
+//        try
+//        {
+//            for(int i=0;i<this.getNumMaxLibri(ripiano);i++)
+//            {
+//                try 
+//                {
+//                    l=getLibro(ripiano, i);
+//                    m.setVolume(l, i);
+//                } 
+//                catch (EccezioneRipianoNonValido ex) 
+//                {
+//                        //non succede
+//                } 
+//                catch (EccezionePosizioneNonValida ex) 
+//                {
+//                    //non succede
+//                }
+//                catch (EccezionePosizioneVuota ex) 
+//                {
+//                    //non fare nulla
+//                } 
+//                catch (EccezionePosizioneOccupata ex) 
+//                {
+//                   //non succede
+//                }
+//            }
+//        }
+//        catch(EccezioneRipianoNonValido e)
+//        {
+//            //non succede
+//        }
+       
+//            return m;
+//        }
+    
+    public boolean equals(Object o)
+    {
+        Scaffale s=(Scaffale) o;
+        Libro libroThis,libroS;
+        //Faccio passare tutte le posizioni di this
+        try
+        {
+            for (int i=0;i<getNumRipiani();i++)
+            {
+                for(int j=0;j<getNumMaxLibri(i);j++)
+                {
+                    try 
+                    {
+                        
+                        libroThis=this.getLibro(i, j);
+                        //Se in this c'è un libro, verifico che tale libro ci sia anche in s
+                        try
+                        {
+                            libroS=s.getLibro(i, j);
+                            if(!libroThis.equals(libroS))
+                                return false; //due libri diversi nella stessa posizione
+                        }
+                        catch(EccezionePosizioneVuota e)
+                        {
+                            return false; //non cìè il libro in s
+                        }  
+                    } 
+                    catch (EccezionePosizioneNonValida ex) 
+                    {
+                      //non succede
+                    } 
+                    catch (EccezionePosizioneVuota ex) 
+                    {
+                       //Se la posizione è vuota in This, deve essere vuota anche in s
+                        try
+                        {
+                            libroS=s.getLibro(i, j);
+                            return false; //in s c'è un libro e in this non c'è
+                        }
+                        catch(EccezionePosizioneVuota e)
+                        {
+                           //ok non cìè il libro in s
+                        } 
+                        catch (EccezionePosizioneNonValida ex1) 
+                        {
+                            //mai
+                        }  
+                    }
+                }
+
+            }
+        }
+        catch (EccezioneRipianoNonValido e)
+        {
+            //mai
+        }
+       
+        return true;
+    }    
 }

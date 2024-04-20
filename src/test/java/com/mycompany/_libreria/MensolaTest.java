@@ -194,4 +194,22 @@ public class MensolaTest
         m2.rimuoviVolume(0);
         assertFalse(m1.equals(m2));
     }
+    
+     @Test
+    public void testMetodoEqualsNumeroLibriUgualeInPosizioniDiverse() throws Exception 
+    {
+        m1.setVolume(l1, 0);
+        Mensola m2=new Mensola();
+        m2.setVolume(l1, 1);
+        assertFalse(m1.equals(m2));
+    }
+    
+    @Test
+    public void testMetodoEqualsLibriDiversiInPosizioniUguali() throws Exception 
+    {
+        m1.setVolume(l1, 1);
+        Mensola m2=new Mensola();
+        m2.setVolume(l2, 1);
+        assertFalse(m1.equals(m2));
+    }
 }
