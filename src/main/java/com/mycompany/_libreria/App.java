@@ -24,32 +24,8 @@ public class App {
 
     public static void main(String[] args) 
     {
-        
-      Libro l1=new Libro("libro1","autore1",100);
-       Libro l2=new Libro("A","B",12);
-       Scaffale s1=new Scaffale();
-       Scaffale s2=new Scaffale();
-        try 
-        {
-            s1.setLibro(l1, 0, 0);
-            System.out.println(s1.toString());
-
-        } 
-        catch (EccezionePosizioneOccupata ex) 
-        {
-
-        } 
-        catch (EccezionePosizioneNonValida ex) 
-        {
-
-        } catch (EccezioneRipianoNonValido ex) 
-        {
-
-        } 
-       
-        
-       
-        /* 
+         
+     
         //Gestione con Menu
         Scaffale s1=new Scaffale();
         int sceltaMenu;
@@ -465,7 +441,7 @@ public class App {
             
         }while(true);
         
-        */
+        
     }
     
     

@@ -468,7 +468,7 @@ void testEqualsUnLibroUgualeInPosizioniDiverse() throws EccezionePosizioneOccupa
     assertFalse(s1.equals(s2));
 } 
 
-@Test
+@Test 
 void testEqualsLibroDiversoNellaStessaPosizione() throws EccezionePosizioneOccupata, EccezionePosizioneNonValida, EccezioneRipianoNonValido
 {
     s1.setLibro(l1, 0, 0);
