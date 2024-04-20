@@ -24,7 +24,8 @@ public class App {
 
     public static void main(String[] args) 
     {
-        
+         
+     
         //Gestione con Menu
         Scaffale s1=new Scaffale();
         int sceltaMenu;

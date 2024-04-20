@@ -1,4 +1,2 @@
-ciao;la;23;2;2
-sdjfop;ed;22;1;1
-
-
+1;1;I promessi sposi;Manzoni;600
+3;4;Le avventure di Pinocchio;Collodi;200
