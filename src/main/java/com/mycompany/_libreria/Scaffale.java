@@ -170,7 +170,7 @@ public class Scaffale implements Serializable
                 try 
                 {
                     libro=getLibro(i, j);
-                    if (libro.getAutore().equals(autore))
+                    if (libro.getAutore().equalsIgnoreCase(autore))
                         contaLibriAutore++;
                 } 
                 catch (EccezionePosizioneVuota ex) 
@@ -192,7 +192,7 @@ public class Scaffale implements Serializable
                 try 
                 {
                     libro=getLibro(i, j);
-                    if (libro.getAutore().equals(autore))
+                    if (libro.getAutore().equalsIgnoreCase(autore))
                     {
                         elencoTitoli[posizioneTitolo]=libro.getTitolo();
                         posizioneTitolo++;
@@ -341,21 +341,23 @@ public class Scaffale implements Serializable
             libroLetto=f1.fromFile();  
             while(libroLetto!=null)
             {     
-                libroLettoSplit=libroLetto.split(";");
-                ripiano=Integer.parseInt(libroLettoSplit[0]);
-                posizione=Integer.parseInt(libroLettoSplit[1]);
-                titolo=libroLettoSplit[2];
-                autore=libroLettoSplit[3];
-                numeroPagine=Integer.parseInt(libroLettoSplit[4]);
-                lib=new Libro(titolo,autore,numeroPagine);
+               
                 try 
                 {
+                    libroLettoSplit=libroLetto.split(";");
+                    ripiano=Integer.parseInt(libroLettoSplit[0]);
+                    posizione=Integer.parseInt(libroLettoSplit[1]);
+                    titolo=libroLettoSplit[2];
+                    autore=libroLettoSplit[3];
+                    numeroPagine=Integer.parseInt(libroLettoSplit[4]);
+                    lib=new Libro(titolo,autore,numeroPagine);
                     setLibro(lib, ripiano, posizione);
                 } 
-                catch (EccezionePosizioneOccupata | EccezionePosizioneNonValida |EccezioneRipianoNonValido ex) 
+                catch (EccezionePosizioneOccupata | EccezionePosizioneNonValida |EccezioneRipianoNonValido | NumberFormatException ex) 
                 {
                    //Il libro letto da file viene ignorato in tutti questi casi
                 }  
+                
                 libroLetto=f1.fromFile();   //Leggo il libro successivo
             }
         } 

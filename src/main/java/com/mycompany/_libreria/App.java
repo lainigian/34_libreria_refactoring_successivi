@@ -404,10 +404,10 @@ public class App {
                         s1.importaLibriCSV(nomeFileCSV);
                         System.out.println("Importazione avvenuta con successo.");
                     } 
-                    catch (NumberFormatException e)
+                   /* catch (NumberFormatException e)
                     {
                         System.out.println("Errore! Il formato del file CSV non è corretto.");
-                    }
+                    }*/
                     catch (IOException ex) 
                     {
                         System.out.println("Errore! impossibile accedere ai file. I libri non sono stati importati!");
