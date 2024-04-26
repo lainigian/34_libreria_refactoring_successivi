@@ -93,12 +93,6 @@ public class Libro implements Serializable
         return s;
     }
     
-    @Override
-    public boolean equals(Object o)
-    {
-        Libro l=(Libro) o;
-        return (getTitolo().equals(l.getTitolo()) && getAutore().equals(l.getAutore()) && getNumeropagine()==l.getNumeropagine());
-    }
-    
+  
 }
 

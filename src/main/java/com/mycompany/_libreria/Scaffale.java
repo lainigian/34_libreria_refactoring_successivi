@@ -94,15 +94,7 @@ public class Scaffale implements Serializable
         }        
     }
     
-   /**
-    * Restituisce il volume nella posizione "posizione" del ripiano “ripiano”. 
-    * @param ripiano Il ripiano da cui ottenere il volume
-    * @param posizione La posizione, all'interno del ripiano, da cui ottenere il volume
-    * @return
-    * @throws EccezioneRipianoNonValido Se il ripiano non esiste
-    * @throws EccezionePosizioneNonValida Se la posizione non esiste
-    * @throws EccezionePosizioneVuota Se in quel ripiano-posizione non è presente un volume
-    */
+ 
     public Libro getLibro(int ripiano, int posizione) throws EccezioneRipianoNonValido, EccezionePosizioneNonValida, EccezionePosizioneVuota
     {
         Libro libro;
@@ -112,14 +104,7 @@ public class Scaffale implements Serializable
         return libro;         
     }
     
-    /**
-     * Elimina il volume nella posizione "posizione" del ripiano “ripiano”. 
-     * @param ripiano ripiano da cui rimuovere il volume
-     * @param posizione posizione del ripiano da cuio rimuovere il volume
-     * @throws EccezioneRipianoNonValido Se il ripiano non esiste
-     * @throws EccezionePosizioneNonValida Se la posizione nonesiste
-     * @throws EccezionePosizioneVuota se in quel ripiano-posizione non è presente il volume
-     */
+
     public void rimuoviLibro(int ripiano, int posizione) throws EccezioneRipianoNonValido, EccezionePosizioneNonValida, EccezionePosizioneVuota
     {
         
@@ -147,14 +132,7 @@ public class Scaffale implements Serializable
         return numeroMassimoLibri;
     }
     
-    /**
-     * Restituisce un array contenente  titoli dei libri di uno specifico autore
-     * presente nello scaffale
-     * @param autore L'autore per il quale effettuare la ricerca
-     * @return
-     * @throws EccezioneRipianoNonValido 
-     * @throws EccezionePosizioneNonValida 
-     */
+   
     public String[] elencoTitoliAutore(String autore) throws EccezioneRipianoNonValido, EccezionePosizioneNonValida
     {
         Libro libro;
@@ -269,16 +247,7 @@ public class Scaffale implements Serializable
         elencoLibriPresenti=Ordinatore.selectionSortCrescenteTitolo(elencoLibriPresenti);
         return elencoLibriPresenti;
     }
-    
-    /**
-     * Esporta i libri presenti nello scaffale in un file di testo in formato CSV.
-     * Per ogni libro vengono esportate le seguenti informazioni:
-     * ripiano;posizione;titolo;autore;numeroPagine.
-     * Prima di esportare i libri, cancello dal file CSV tutti i dati presenti
-     * @param nomeFile  Pathname del file di testo in cui verranno salvati i dati
-     * @throws IOException  Se non è possibile accedere al file
-     * @throws FileException    Se il file è aperto in lettura anzichè in scrittura
-     */
+
     public void esportaLibriCSV(String nomeFile) throws IOException, FileException
     {
         Libro lib;
@@ -317,14 +286,7 @@ public class Scaffale implements Serializable
        f1.close();
     }
     
-    // 
-    /**
-     * Legge i libri presenti in un file di testo CSV e li aggiunge allo scaffale,
-     * Se il ripiano o la posizione del libro non è valida,il  libro letto dal file non viene caricato
-     * Se il ripiano/posizione del libro è già occupato, il libro letto dal file non viene caricato.
-     * @param nomeFile pathname del file CSV da cui importare i volumi
-     * @throws IOException Se non è possibile accedere al file
-     */
+  
     public void importaLibriCSV(String nomeFile) throws IOException
     {
         TextFile f1=new TextFile(nomeFile, 'R'); //Apro il file in lettura
@@ -368,12 +330,7 @@ public class Scaffale implements Serializable
         f1.close();
     }
     
-    /**
-     * Salva l'oggetto scaffale this (e tutti gli oggetti in esso contenuti) su un file binario
-     * @param nomeFile Nome del file
-     * @throws FileNotFoundException Se il file non viene trovato in fase di chiusura
-     * @throws IOException Se non è possibile accedere al file
-     */
+
     public void salvaScaffale(String nomeFile) throws FileNotFoundException, IOException
     {
         
@@ -384,16 +341,7 @@ public class Scaffale implements Serializable
         output.close();
     }
     
-    /**
-     * Restituisce un oggetto scaffale (e tutti gli oggetti in esso contenuti)
-     * precedentemente memeorizzato in un file binario
-     * 
-     * @param nomeFile Pathname del file binario
-     * @return
-     * @throws FileNotFoundException Se il file non viene trovato in fase di chiusura
-     * @throws IOException      Se non è possibile accedere al file
-     * @throws ClassNotFoundException Se la struttura dati memorizzata nel file non corrisponde allo scaffale
-     */
+
     public static Scaffale caricaScaffale(String nomeFile) throws FileNotFoundException, IOException, ClassNotFoundException
     {
         FileInputStream f1=new FileInputStream(nomeFile);
@@ -415,104 +363,6 @@ public class Scaffale implements Serializable
         }
         return s;
     }
-//    
-//    //Restituisce una copia di una mensola
-//    public Mensola getMensola(int ripiano)
-//    {
-//        Mensola m=new Mensola();
-//        Libro l;
-//        try
-//        {
-//            for(int i=0;i<this.getNumMaxLibri(ripiano);i++)
-//            {
-//                try 
-//                {
-//                    l=getLibro(ripiano, i);
-//                    m.setVolume(l, i);
-//                } 
-//                catch (EccezioneRipianoNonValido ex) 
-//                {
-//                        //non succede
-//                } 
-//                catch (EccezionePosizioneNonValida ex) 
-//                {
-//                    //non succede
-//                }
-//                catch (EccezionePosizioneVuota ex) 
-//                {
-//                    //non fare nulla
-//                } 
-//                catch (EccezionePosizioneOccupata ex) 
-//                {
-//                   //non succede
-//                }
-//            }
-//        }
-//        catch(EccezioneRipianoNonValido e)
-//        {
-//            //non succede
-//        }
-       
-//            return m;
-//        }
+      
     
-    public boolean equals(Object o)
-    {
-        Scaffale s=(Scaffale) o;
-        Libro libroThis,libroS;
-        //Faccio passare tutte le posizioni di this
-        try
-        {
-            for (int i=0;i<getNumRipiani();i++)
-            {
-                for(int j=0;j<getNumMaxLibri(i);j++)
-                {
-                    try 
-                    {
-                        
-                        libroThis=this.getLibro(i, j);
-                        //Se in this c'è un libro, verifico che tale libro ci sia anche in s
-                        try
-                        {
-                            libroS=s.getLibro(i, j);
-                            if(!libroThis.equals(libroS))
-                                return false; //due libri diversi nella stessa posizione
-                        }
-                        catch(EccezionePosizioneVuota e)
-                        {
-                            return false; //non cìè il libro in s
-                        }  
-                    } 
-                    catch (EccezionePosizioneNonValida ex) 
-                    {
-                      //non succede
-                    } 
-                    catch (EccezionePosizioneVuota ex) 
-                    {
-                       //Se la posizione è vuota in This, deve essere vuota anche in s
-                        try
-                        {
-                            libroS=s.getLibro(i, j);
-                            return false; //in s c'è un libro e in this non c'è
-                        }
-                        catch(EccezionePosizioneVuota e)
-                        {
-                           //ok non cìè il libro in s
-                        } 
-                        catch (EccezionePosizioneNonValida ex1) 
-                        {
-                            //mai
-                        }  
-                    }
-                }
-
-            }
-        }
-        catch (EccezioneRipianoNonValido e)
-        {
-            //mai
-        }
-       
-        return true;
-    }    
-}
+  }
